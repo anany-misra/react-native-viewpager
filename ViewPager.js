@@ -66,7 +66,7 @@ var ViewPager = createReactClass({
   getInitialState() {
     return {
       currentPage: 0,
-      viewWidth: 0,
+      viewWidth: this.props.viewWidth,
       scrollValue: new Animated.Value(0)
     };
   },
@@ -75,7 +75,7 @@ var ViewPager = createReactClass({
     this.childIndex = 0;
 
     var release = (e, gestureState) => {
-      var relativeGestureDistance = gestureState.dx / deviceWidth,
+      var relativeGestureDistance = gestureState.dx / this.props.viewWidth,
           //lastPageIndex = this.props.children.length - 1,
           vx = gestureState.vx;
 
@@ -271,7 +271,7 @@ var ViewPager = createReactClass({
 
     var pagesNum = 0;
     var hasLeft = false;
-    var viewWidth = this.state.viewWidth;
+    var viewWidth = this.props.viewWidth;
 
     if(pageIDs.length > 0 && viewWidth > 0) {
       // left page
