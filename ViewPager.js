@@ -75,7 +75,7 @@ var ViewPager = createReactClass({
     this.childIndex = 0;
 
     var release = (e, gestureState) => {
-      var relativeGestureDistance = gestureState.dx / this.props.viewWidth,
+      var relativeGestureDistance = gestureState.dx / this.state.viewWidth,
           //lastPageIndex = this.props.children.length - 1,
           vx = gestureState.vx;
 
@@ -264,6 +264,7 @@ var ViewPager = createReactClass({
   },
 
   render() {
+    const isSSR = typeof window === 'undefined'; 
     var dataSource = this.props.dataSource;
     var pageIDs = dataSource.pageIdentities;
 
@@ -271,9 +272,9 @@ var ViewPager = createReactClass({
 
     var pagesNum = 0;
     var hasLeft = false;
-    var viewWidth = this.props.viewWidth;
+    var viewWidth = this.state.viewWidth;
 
-    if(pageIDs.length > 0 && viewWidth > 0) {
+    if(pageIDs.length > 0) {
       // left page
       if (this.state.currentPage > 0) {
         bodyComponents.push(this._getPage(this.state.currentPage - 1));
@@ -300,7 +301,7 @@ var ViewPager = createReactClass({
     }
 
     var sceneContainerStyle = {
-      width: viewWidth * pagesNum,
+      width: isSSR ? `calc(100vw * ${pagesNum})`: (viewWidth * pagesNum),
       flex: 1,
       flexDirection: 'row'
     };
@@ -316,7 +317,7 @@ var ViewPager = createReactClass({
         onLayout={(event) => {
             // console.log('ViewPager.onLayout()');
             var viewWidth = event.nativeEvent.layout.width;
-            if (!viewWidth || this.state.viewWidth === viewWidth) {
+            if (this.state.viewWidth === viewWidth) {
               return;
             }
             this.setState({
