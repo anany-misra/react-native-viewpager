@@ -306,8 +306,8 @@ var ViewPager = createReactClass({
       flexDirection: 'row'
     };
 
-    // this.childIndex = hasLeft ? 1 : 0;
-    // this.state.scrollValue.setValue(this.childIndex);
+    this.childIndex = hasLeft ? 1 : 0;
+    this.state.scrollValue.setValue(this.childIndex);
     var translateX = this.state.scrollValue.interpolate({
       inputRange: [0, 1], outputRange: [0, -viewWidth]
     });
