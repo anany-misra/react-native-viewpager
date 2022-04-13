@@ -308,7 +308,7 @@ var ViewPager = createReactClass({
 
     this.childIndex = hasLeft ? 1 : 0;
     this.state.scrollValue.setValue(this.childIndex);
-    var translateX = isSSR ? '-100vw': this.state.scrollValue.interpolate({
+    var translateX = isSSR ? ( bodyComponents.length === 1 ? '0' : '-100vw') : this.state.scrollValue.interpolate({
       inputRange: [0, 1], outputRange: [0, -viewWidth]
     });
 
